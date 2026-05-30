@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAFE TALK</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, sans-serif; background: #f5f5f5; }
+
+    .header {
+      background: #534AB7; color: white;
+      padding: 16px; text-align: center;
+    }
+    .header h1 { font-size: 20px; letter-spacing: 2px; }
+    .header p  { font-size: 12px; opacity: .8; margin-top: 2px; }
+
+    .nav {
+      display: flex; background: white;
+      border-bottom: 1px solid #eee;
+    }
+    .nav button {
+      flex: 1; padding: 12px 4px; border: none;
+      background: none; font-size: 12px; color: #888; cursor: pointer;
+    }
+    .nav button.active { color: #534AB7; border-bottom: 2px solid #534AB7; font-weight: 600; }
+
+    .screen { display: none; padding: 16px; max-width: 480px; margin: 0 auto; }
+    .screen.active { display: block; }
+
+    .card {
+      background: white; border-radius: 12px;
+      padding: 14px; margin-bottom: 12px;
+      border: 1px solid #eee;
+    }
+    .label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 4px; }
+
+    .risk-bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 8px;
+      background: white; border: 1px solid #eee;
+      margin-bottom: 12px; font-size: 13px;
+    }
+    .risk-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    .bubble {
+      background: #f0f0f0; border-radius: 4px 12px 12px 12px;
+      padding: 10px 12px; margin-bottom: 14px; font-size: 14px; line-height: 1.5;
+    }
+    .bubble-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
+
+    .choice {
+      width: 100%; padding: 12px; margin-bottom: 8px;
+      border: 1px solid #ddd; border-radius: 8px;
+      background: white; font-size: 13px; text-align: left;
+      cursor: pointer; line-height: 1.5; transition: background .15s;
+    }
+    .choice:hover { background: #f8f8f8; }
+    .choice.correct { background: #E1F5EE; border-color: #1D9E75; }
+    .choice.wrong   { background: #FAECE7; border-color: #D85A30; }
+    .choice.neutral { background: #FAEEDA; border-color: #BA7517; }
+
+    .feedback {
+      padding: 12px; border-radius: 8px;
+      font-size: 13px; line-height: 1.6; margin-bottom: 12px;
+    }
+    .feedback.good    { background: #E1F5EE; border-left: 3px solid #1D9E75; }
+    .feedback.bad     { background: #FAECE7; border-left: 3px solid #D85A30; }
+    .feedback.neutral { background: #FAEEDA; border-left: 3px solid #BA7517; }
+    .feedback-title   { font-weight: 600; margin-bottom: 4px; }
+
+    .progress-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .progress-bar { flex: 1; height: 4px; background: #eee; border-radius: 2px; }
+    .progress-fill { height: 100%; background: #534AB7; border-radius: 2px; transition: width .3s; }
+
+    .next-btn {
+      width: 100%; padding: 12px; border: 1px solid #ccc;
+      border-radius: 8px; background: white; font-size: 14px;
+      cursor: pointer; font-weight: 500;
+    }
+    .next-btn:hover { background: #f5f5f5; }
+
+    textarea {
+      width: 100%; padding: 10px 12px; font-size: 13px;
+      border: 1px solid #ddd; border-radius: 8px;
+      resize: none; font-family: inherit; line-height: 1.5; margin-bottom: 8px;
+    }
+    .submit-btn {
+      float: right; padding: 8px 18px;
+      background: #534AB7; color: white; border: none;
+      border-radius: 8px; font-size: 13px; cursor: pointer;
+    }
+    .submit-btn:disabled { opacity: .5; cursor: default; }
+
+    .ai-result { background: white; border-radius: 12px; border: 1px solid #eee; overflow: hidden; margin-top: 16px; }
+    .ai-result-header { padding: 8px 14px; background: #f8f8f8; border-bottom: 1px solid #eee; font-size: 12px; color: #888; }
+    .ai-result-body   { padding: 14px; }
+    .risk-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 12px; font-weight: 600; margin-bottom: 10px;
+    }
+    .suggestion {
+      background: #E6F1FB; border-radius: 8px;
+      padding: 10px 12px; color: #0C447C; font-size: 13px;
+      line-height: 1.6; margin: 8px 0;
+    }
+    .tip {
+      background: #f8f8f8; border-radius: 8px;
+      padding: 8px 12px; font-size: 13px; color: #666; margin-top: 8px;
+    }
+
+    .case-tag {
+      display: inline-block; padding: 3px 8px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; margin-bottom: 6px;
+    }
+    .tag-delirium  { background: #FAEEDA; color: #633806; }
+    .tag-verbal    { background: #FAECE7; color: #4A1B0C; }
+    .tag-guardian  { background: #E6F1FB; color: #0C447C; }
+
+    .case-steps { margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; }
+    .step-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: flex-start; }
+    .step-num {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #f0f0f0; font-size: 11px; font-weight: 600;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .expand-btn { font-size: 12px; color: #888; background: none; border: none; cursor: pointer; margin-top: 6px; }
+
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .stat-card { background: #f8f8f8; border-radius: 8px; padding: 12px; text-align: center; }
+    .stat-num   { font-size: 24px; font-weight: 600; color: #534AB7; }
+    .stat-label { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+    .loading { text-align: center; padding: 20px; color: #aaa; font-size: 13px; }
+    .clearfix::after { content: ''; display: table; clear: both; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SAFE TALK</h1>
+  <p>AI 기반 병동 폭력 예방 교육 시스템</p>
+</div>
+
+<div class="nav">
+  <button class="active" onclick="showTab('sim', this)">▶ 시뮬</button>
+  <button onclick="showTab('coach', this)">💬 코칭</button>
+  <button onclick="showTab('cases', this)">📚 사례</button>
+  <button onclick="showTab('stats', this)">📊 통계</button>
+</div>
+
+<!-- 시뮬레이션 -->
+<div id="tab-sim" class="screen active">
+  <div class="progress-row">
+    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:33%"></div></div>
+    <span id="prog-text" style="font-size:12px;color:#aaa">1 / 3</span>
+  </div>
+  <div class="risk-bar">
+    <div class="risk-dot" id="risk-dot"></div>
+    <span id="risk-label" style="font-weight:600;font-size:13px"></span>
+  </div>
+  <div id="sim-body"></div>
+</div>
+
+<!-- 코칭 -->
+<div id="tab-coach" class="screen">
+  <div class="card">
+    <div class="label">AI 표현 코칭</div>
+    <div style="font-size:13px;line-height:1.5;color:#555">실제 상황에서 사용한 표현을 입력하면 AI가 분석하고 더 안전한 표현을 제안해드립니다.</div>
+  </div>
+  <textarea id="coach-input" rows="3" placeholder='예) "조용히 하세요, 다른 환자들 방해됩니다."'></textarea>
+  <div class="clearfix">
+    <button class="submit-btn" id="coach-btn" onclick="runCoach()">AI 분석 →</button>
+  </div>
+  <div id="coach-result"></div>
+</div>
+
+<!-- 사례 -->
+<div id="tab-cases" class="screen">
+  <div id="cases-body"></div>
+</div>
+
+<!-- 통계 -->
+<div id="tab-stats" class="screen">
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-num" id="s-total">0</div><div class="stat-label">총 시도</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-correct">0</div><div class="stat-label">정답</div></div>
+    <div class="stat-card"><div class="stat-num" id="s-pct">0%</div><div class="stat-label">정확도</div></div>
+  </div>
+  <div class="card">
+    <div class="label">학습 현황</div>
+    <div id="stats-msg" style="font-size:13px;color:#888;line-height:1.6">아직 시뮬레이션을 진행하지 않았습니다.</div>
+  </div>
+</div>
+
+<script>
+const SCENARIOS = [
+  {
+    risk: { color:'#F0A500', label:'🟡 긴장 증가' },
+    context: '환자가 검사 지연으로 화를 내며 큰 소리로 항의하고 있습니다.',
+    speech: '"검사가 언제 되는 건지 아무도 얘기 안 해주네요! 여기가 병원이에요, 뭐예요?"',
+    choices: [
+      { text: 'A. "조용히 해주세요. 다른 분들도 계세요."', type:'wrong' },
+      { text: 'B. "많이 답답하셨죠. 검사 현황 바로 확인해드리겠습니다."', type:'correct' },
+      { text: 'C. 일단 자리를 피해 다음에 다시 이야기한다.', type:'neutral' },
+    ],
+    feedbacks: [
+      { title:'❌ 갈등 심화 우려', text:'환자 감정을 억압하는 표현으로 상황이 급격히 악화될 수 있습니다.', cls:'bad' },
+      { title:'✓ 최선의 대응', text:'공감 표현으로 감정을 수용한 후 구체적 행동을 약속했습니다.', cls:'good' },
+      { title:'△ 상황 회피', text:'즉각 대응하지 않으면 환자의 불안이 더 커질 수 있습니다.', cls:'neutral' },
+    ]
+  },
+  {
+    risk: { color:'#D85A30', label:'🟠 공격 위험' },
+    context: '야간 근무 중 섬망이 의심되는 고령 환자가 침대에서 내려오려 합니다.',
+    speech: '"나 집에 가야 돼! 왜 나를 묶어놔! 이거 놔!"',
+    choices: [
+      { text: 'A. "환자분, 지금 병원이에요! 위험하니 누워 계세요!"', type:'wrong' },
+      { text: 'B. 강제로 눕히고 억제대를 즉시 적용한다.', type:'wrong' },
+      { text: 'C. 낮은 목소리로 "여기 계세요, 제가 옆에 있을게요." 반복', type:'correct' },
+    ],
+    feedbacks: [
+      { title:'❌ 지시형 언어 위험', text:'섬망 환자에게 명령형 지시는 공포와 공격성을 높입니다.', cls:'bad' },
+      { title:'❌ 즉각 억제 주의', text:'최후 수단으로만 활용하고 반드시 의사 처방이 필요합니다.', cls:'bad' },
+      { title:'✓ 섬망 환자 최적 대응', text:'안정적 목소리와 반복 안심 표현이 핵심입니다.', cls:'good' },
+    ]
+  },
+  {
+    risk: { color:'#E24B4A', label:'🔴 폭력 가능성 높음' },
+    context: '보호자가 수술 결과에 불만을 표하며 스테이션으로 다가오고 있습니다.',
+    speech: '"당신들 때문에 우리 가족이 이렇게 된 거잖아요! 책임져요!"',
+    choices: [
+      { text: 'A. 직접 보호자를 붙잡으며 진정시킨다.', type:'wrong' },
+      { text: 'B. "얼마나 힘드실지 압니다. 잠깐 앉아서 이야기 나눠봐요." + 동료 신호', type:'correct' },
+      { text: 'C. 즉시 자리를 피하고 보안팀에 연락한다.', type:'neutral' },
+    ],
+    feedbacks: [
+      { title:'❌ 신체 접촉 금지', text:'이 단계 신체 접촉은 폭행으로 이어질 수 있습니다.', cls:'bad' },
+      { title:'✓ 표준 대응 프로토콜', text:'공감 표현과 거리 유지, 동료 지원 요청의 정석 대응입니다.', cls:'good' },
+      { title:'△ 상황에 따라 적절', text:'직접적 위협이 임박했다면 즉시 대피가 맞습니다.', cls:'neutral' },
+    ]
+  }
+];
+
+const CASES = [
+  { tag:'tag-delirium', tagText:'섬망 환자', title:'야간 섬망 환자 침대 이탈 사건',
+    summary:'75세 남성, 복부수술 후 2일차. 야간에 갑자기 집에 가야 한다며 이탈 시도.',
+    steps:['원인: 수술 후 통증, 수면 교란, 낯선 환경으로 인한 급성 섬망','잘못된 대응: 소리 지르며 억제 → 공격성 증가','올바른 대응: 조명 밝히기, 낮은 목소리로 안심, 가족 연락, 의사 보고'] },
+  { tag:'tag-verbal', tagText:'환자 폭언', title:'처치 지연 항의 중 폭언 상황',
+    summary:'응급 처치 대기 중 환자가 지속적으로 모욕적 언어 사용.',
+    steps:['원인: 극심한 통증과 불안으로 인한 통제력 상실','잘못된 대응: 맞대응 또는 무시 → 상황 격화','올바른 대응: "화나신 거 이해해요. 통증부터 해결해드릴게요." 감정 우선 공감'] },
+  { tag:'tag-guardian', tagText:'보호자 분쟁', title:'수술 결과 불만 보호자 폭력 직전 상황',
+    summary:'수술 후 합병증 발생. 보호자가 의료진 과실 주장하며 물리적 위협.',
+    steps:['원인: 정보 부족과 슬픔이 분노로 전환','잘못된 대응: 즉각 변명 또는 자리 회피 → 불신 심화','올바른 대응: 안전한 공간 안내, 경청, 담당의 연결, 보안팀 대기'] },
+];
+
+let cur = 0, answered = false, stats = { total:0, correct:0 };
+
+function showTab(name, btn) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'cases') renderCases();
+  if (name === 'stats') renderStats();
+}
+
+function renderSim() {
+  const s = SCENARIOS[cur];
+  document.getElementById('prog').style.width = ((cur+1)/SCENARIOS.length*100) + '%';
+  document.getElementById('prog-text').textContent = (cur+1) + ' / ' + SCENARIOS.length;
+  document.getElementById('risk-dot').style.background = s.risk.color;
+  document.getElementById('risk-label').textContent = s.risk.label;
+  document.getElementById('risk-label').style.color = s.risk.color;
+
+  const body = document.getElementById('sim-body');
+  body.innerHTML = `
+    <div class="card"><div class="label">상황</div><div style="font-size:14px;line-height:1.6">${s.context}</div></div>
+    <div class="bubble"><div class="bubble-label">환자</div>${s.speech}</div>
+    ${s.choices.map((c,i) => `<button class="choice" onclick="pick(${i})">${c.text}</button>`).join('')}
+    <div id="feedback-area"></div>
+    <div id="next-area"></div>
+  `;
+  answered = false;
+}
+
+function pick(idx) {
+  if (answered) return;
+  answered = true;
+  const s = SCENARIOS[cur];
+  document.querySelectorAll('.choice').forEach((b,i) => b.classList.add(s.choices[i].type));
+  const fb = s.feedbacks[idx];
+  document.getElementById('feedback-area').innerHTML =
+    `<div class="feedback ${fb.cls}"><div class="feedback-title">${fb.title}</div>${fb.text}</div>`;
+  stats.total++;
+  if (s.choices[idx].type === 'correct') stats.correct++;
+
+  const isLast = cur >= SCENARIOS.length - 1;
+  document.getElementById('next-area').innerHTML =
+    `<button class="next-btn" onclick="${isLast ? 'resetSim()' : 'nextSim()'}">${isLast ? '처음으로 돌아가기 ↺' : '다음 시나리오 →'}</button>`;
+}
+
+function nextSim() { cur++; renderSim(); }
+function resetSim() { cur = 0; renderSim(); }
+
+function renderCases() {
+  const el = document.getElementById('cases-body');
+  if (el.innerHTML) return;
+  CASES.forEach((c,i) => {
+    el.innerHTML += `
+      <div class="card">
+        <span class="case-tag ${c.tag}">${c.tagText}</span>
+        <div style="font-size:14px;font-weight:600;margin-bottom:6px">${c.title}</div>
+        <div style="font-size:13px;color:#666;line-height:1.5">${c.summary}</div>
+        <button class="expand-btn" id="exp-btn-${i}" onclick="toggleCase(${i})">자세히 보기 ↓</button>
+        <div id="case-${i}" style="display:none">
+          <div class="case-steps">
+            ${c.steps.map((s,j) => `<div class="step-row"><div class="step-num">${j+1}</div><div style="font-size:13px;line-height:1.5">${s}</div></div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function toggleCase(i) {
+  const el = document.getElementById('case-'+i);
+  const btn = document.getElementById('exp-btn-'+i);
+  const open = el.style.display === 'none';
+  el.style.display = open ? 'block' : 'none';
+  btn.textContent = open ? '접기 ↑' : '자세히 보기 ↓';
+}
+
+function renderStats() {
+  document.getElementById('s-total').textContent = stats.total;
+  document.getElementById('s-correct').textContent = stats.correct;
+  const pct = stats.total ? Math.round(stats.correct/stats.total*100) : 0;
+  document.getElementById('s-pct').textContent = pct + '%';
+  const msg = stats.total === 0 ? '아직 시뮬레이션을 진행하지 않았습니다.'
+    : pct >= 80 ? `정확도 ${pct}% — 훌륭합니다! 실전 대응 능력이 높습니다.`
+    : pct >= 50 ? `정확도 ${pct}% — 양호합니다. 사례 학습으로 더 향상시켜 보세요.`
+    : `정확도 ${pct}% — 사례 탭을 먼저 학습한 후 다시 시도해보세요.`;
+  document.getElementById('stats-msg').textContent = msg;
+}
+
+async function runCoach() {
+  const input = document.getElementById('coach-input').value.trim();
+  if (!input) return;
+  const btn = document.getElementById('coach-btn');
+  btn.disabled = true; btn.textContent = '분석 중...';
+  document.getElementById('coach-result').innerHTML = '<div class="loading">AI가 분석하고 있습니다...</div>';
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system: `당신은 병동 폭력 예방 전문 간호 교육 AI입니다. 반드시 JSON만 출력:
+{"risk_level":"낮음|보통|높음","risk_reason":"위험한 이유 1문장","better":"개선된 표현","better_reason":"왜 더 나은지 1-2문장","tip":"실전 팁 1문장"}`,
+        message: `간호사 표현: "${input}"`
+      })
+    });
+    const data = await res.json();
+    const p = JSON.parse(data.result.replace(/```json|```/g,'').trim());
+    const riskBg = p.risk_level==='높음'?'#FAECE7':p.risk_level==='보통'?'#FAEEDA':'#E1F5EE';
+    const riskColor = p.risk_level==='높음'?'#4A1B0C':p.risk_level==='보통'?'#412402':'#085041';
+    document.getElementById('coach-result').innerHTML = `
+      <div class="ai-result">
+        <div class="ai-result-header">AI 분석 결과</div>
+        <div class="ai-result-body">
+          <div class="risk-badge" style="background:${riskBg};color:${riskColor}">위험도: ${p.risk_level}</div>
+          <p style="font-size:13px;color:#888;margin-bottom:12px">${p.risk_reason}</p>
+          <div style="font-size:11px;color:#aaa;font-weight:600;margin-bottom:6px">개선된 표현 제안</div>
+          <div class="suggestion">"${p.better}"</div>
+          <p style="font-size:13px;color:#555;margin:8px 0">${p.better_reason}</p>
+          <div class="tip">💡 ${p.tip}</div>
+        </div>
+      </div>`;
+  } catch(e) {
+    document.getElementById('coach-result').innerHTML =
+      '<div class="feedback bad"><div class="feedback-title">오류</div>AI 연결에 실패했습니다. 잠시 후 다시 시도해주세요.</div>';
+  }
+  btn.disabled = false; btn.textContent = 'AI 분석 →';
+}
+
+renderSim();
+</script>
+</body>
+</html>
