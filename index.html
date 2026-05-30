@@ -8,128 +8,90 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, sans-serif; background: #f5f5f5; }
 
-    .header {
-      background: #534AB7; color: white;
-      padding: 16px; text-align: center;
-    }
+    .header { background: #534AB7; color: white; padding: 16px; text-align: center; }
     .header h1 { font-size: 20px; letter-spacing: 2px; }
     .header p  { font-size: 12px; opacity: .8; margin-top: 2px; }
 
-    .nav {
-      display: flex; background: white;
-      border-bottom: 1px solid #eee;
-    }
-    .nav button {
-      flex: 1; padding: 12px 4px; border: none;
-      background: none; font-size: 12px; color: #888; cursor: pointer;
-    }
+    .nav { display: flex; background: white; border-bottom: 1px solid #eee; }
+    .nav button { flex: 1; padding: 12px 4px; border: none; background: none; font-size: 12px; color: #888; cursor: pointer; }
     .nav button.active { color: #534AB7; border-bottom: 2px solid #534AB7; font-weight: 600; }
 
     .screen { display: none; padding: 16px; max-width: 480px; margin: 0 auto; }
     .screen.active { display: block; }
 
-    .card {
-      background: white; border-radius: 12px;
-      padding: 14px; margin-bottom: 12px;
-      border: 1px solid #eee;
-    }
-    .label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 4px; }
+    .card { background: white; border-radius: 12px; padding: 14px; margin-bottom: 12px; border: 1px solid #eee; }
+    .label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; }
 
-    .risk-bar {
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 12px; border-radius: 8px;
-      background: white; border: 1px solid #eee;
-      margin-bottom: 12px; font-size: 13px;
-    }
-    .risk-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .risk-bar { display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; border-radius: 8px; background: white; border: 1px solid #eee; margin-bottom: 12px; }
+    .risk-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+    .risk-info { flex: 1; }
+    .risk-label { font-weight: 600; font-size: 13px; }
+    .risk-factor { font-size: 11px; color: #888; margin-top: 2px; }
 
-    .bubble {
-      background: #f0f0f0; border-radius: 4px 12px 12px 12px;
-      padding: 10px 12px; margin-bottom: 14px; font-size: 14px; line-height: 1.5;
-    }
+    .bubble { background: #f0f0f0; border-radius: 4px 12px 12px 12px; padding: 10px 12px; margin-bottom: 14px; font-size: 14px; line-height: 1.5; }
     .bubble-label { font-size: 11px; color: #aaa; font-weight: 600; margin-bottom: 2px; }
 
-    .choice {
-      width: 100%; padding: 12px; margin-bottom: 8px;
-      border: 1px solid #ddd; border-radius: 8px;
-      background: white; font-size: 13px; text-align: left;
-      cursor: pointer; line-height: 1.5; transition: background .15s;
-    }
+    .choice { width: 100%; padding: 12px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 8px; background: white; font-size: 13px; text-align: left; cursor: pointer; line-height: 1.5; transition: background .15s; }
     .choice:hover { background: #f8f8f8; }
     .choice.correct { background: #E1F5EE; border-color: #1D9E75; }
     .choice.wrong   { background: #FAECE7; border-color: #D85A30; }
     .choice.neutral { background: #FAEEDA; border-color: #BA7517; }
 
-    .feedback {
-      padding: 12px; border-radius: 8px;
-      font-size: 13px; line-height: 1.6; margin-bottom: 12px;
-    }
+    .feedback { padding: 12px; border-radius: 8px; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
     .feedback.good    { background: #E1F5EE; border-left: 3px solid #1D9E75; }
     .feedback.bad     { background: #FAECE7; border-left: 3px solid #D85A30; }
     .feedback.neutral { background: #FAEEDA; border-left: 3px solid #BA7517; }
     .feedback-title   { font-weight: 600; margin-bottom: 4px; }
 
+    .protocol-box { background: #f0f4ff; border-radius: 8px; padding: 10px 12px; margin-top: 8px; font-size: 12px; color: #3C3489; line-height: 1.7; }
+    .protocol-box b { display: block; margin-bottom: 4px; font-size: 13px; }
+
     .progress-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
     .progress-bar { flex: 1; height: 4px; background: #eee; border-radius: 2px; }
     .progress-fill { height: 100%; background: #534AB7; border-radius: 2px; transition: width .3s; }
 
-    .next-btn {
-      width: 100%; padding: 12px; border: 1px solid #ccc;
-      border-radius: 8px; background: white; font-size: 14px;
-      cursor: pointer; font-weight: 500;
-    }
+    .next-btn { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; background: white; font-size: 14px; cursor: pointer; font-weight: 500; }
     .next-btn:hover { background: #f5f5f5; }
 
-    textarea {
-      width: 100%; padding: 10px 12px; font-size: 13px;
-      border: 1px solid #ddd; border-radius: 8px;
-      resize: none; font-family: inherit; line-height: 1.5; margin-bottom: 8px;
-    }
-    .submit-btn {
-      float: right; padding: 8px 18px;
-      background: #534AB7; color: white; border: none;
-      border-radius: 8px; font-size: 13px; cursor: pointer;
-    }
+    textarea { width: 100%; padding: 10px 12px; font-size: 13px; border: 1px solid #ddd; border-radius: 8px; resize: none; font-family: inherit; line-height: 1.5; margin-bottom: 8px; }
+    .submit-btn { float: right; padding: 8px 18px; background: #534AB7; color: white; border: none; border-radius: 8px; font-size: 13px; cursor: pointer; }
     .submit-btn:disabled { opacity: .5; cursor: default; }
+
+    .maps-box { background: #f8f0ff; border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; }
+    .maps-box .maps-title { font-size: 12px; font-weight: 600; color: #534AB7; margin-bottom: 8px; }
+    .maps-q { font-size: 13px; color: #333; padding: 6px 0; border-bottom: 1px solid #e8e0f5; line-height: 1.5; }
+    .maps-q:last-child { border-bottom: none; }
 
     .ai-result { background: white; border-radius: 12px; border: 1px solid #eee; overflow: hidden; margin-top: 16px; }
     .ai-result-header { padding: 8px 14px; background: #f8f8f8; border-bottom: 1px solid #eee; font-size: 12px; color: #888; }
     .ai-result-body   { padding: 14px; }
-    .risk-badge {
-      display: inline-block; padding: 3px 10px; border-radius: 20px;
-      font-size: 12px; font-weight: 600; margin-bottom: 10px;
-    }
-    .suggestion {
-      background: #E6F1FB; border-radius: 8px;
-      padding: 10px 12px; color: #0C447C; font-size: 13px;
-      line-height: 1.6; margin: 8px 0;
-    }
-    .tip {
-      background: #f8f8f8; border-radius: 8px;
-      padding: 8px 12px; font-size: 13px; color: #666; margin-top: 8px;
-    }
+    .risk-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+    .suggestion { background: #E6F1FB; border-radius: 8px; padding: 10px 12px; color: #0C447C; font-size: 13px; line-height: 1.6; margin: 8px 0; }
+    .tip { background: #f8f8f8; border-radius: 8px; padding: 8px 12px; font-size: 13px; color: #666; margin-top: 8px; }
 
-    .case-tag {
-      display: inline-block; padding: 3px 8px; border-radius: 20px;
-      font-size: 11px; font-weight: 600; margin-bottom: 6px;
-    }
-    .tag-delirium  { background: #FAEEDA; color: #633806; }
-    .tag-verbal    { background: #FAECE7; color: #4A1B0C; }
-    .tag-guardian  { background: #E6F1FB; color: #0C447C; }
+    .case-tag { display: inline-block; padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 6px; }
+    .tag-assault  { background: #FAECE7; color: #4A1B0C; }
+    .tag-alcohol  { background: #FAEEDA; color: #412402; }
+    .tag-roommate { background: #E6F1FB; color: #0C447C; }
 
     .case-steps { margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; }
-    .step-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: flex-start; }
-    .step-num {
-      width: 20px; height: 20px; border-radius: 50%;
-      background: #f0f0f0; font-size: 11px; font-weight: 600;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
+    .step-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
+    .step-num { width: 20px; height: 20px; border-radius: 50%; background: #f0f0f0; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-bad  { background: #FAECE7; color: #993C1D; }
+    .step-good { background: #E1F5EE; color: #0F6E56; }
     .expand-btn { font-size: 12px; color: #888; background: none; border: none; cursor: pointer; margin-top: 6px; }
+
+    .ref-box { font-size: 11px; color: #aaa; margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; line-height: 1.6; }
 
     .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
     .stat-card { background: #f8f8f8; border-radius: 8px; padding: 12px; text-align: center; }
     .stat-num   { font-size: 24px; font-weight: 600; color: #534AB7; }
     .stat-label { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+    .risk-guide { margin-bottom: 14px; }
+    .risk-guide-title { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; }
+    .risk-item { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 12px; color: #555; }
+    .risk-dot-sm { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
     .loading { text-align: center; padding: 20px; color: #aaa; font-size: 13px; }
     .clearfix::after { content: ''; display: table; clear: both; }
@@ -155,9 +117,12 @@
     <div class="progress-bar"><div class="progress-fill" id="prog" style="width:33%"></div></div>
     <span id="prog-text" style="font-size:12px;color:#aaa">1 / 3</span>
   </div>
-  <div class="risk-bar">
+  <div class="risk-bar" id="risk-bar">
     <div class="risk-dot" id="risk-dot"></div>
-    <span id="risk-label" style="font-weight:600;font-size:13px"></span>
+    <div class="risk-info">
+      <div class="risk-label" id="risk-label"></div>
+      <div class="risk-factor" id="risk-factor"></div>
+    </div>
   </div>
   <div id="sim-body"></div>
 </div>
@@ -166,8 +131,17 @@
 <div id="tab-coach" class="screen">
   <div class="card">
     <div class="label">AI 표현 코칭</div>
-    <div style="font-size:13px;line-height:1.5;color:#555">실제 상황에서 사용한 표현을 입력하면 AI가 분석하고 더 안전한 표현을 제안해드립니다.</div>
+    <div style="font-size:13px;line-height:1.5;color:#555">실제 상황에서 사용한 표현을 입력하면 AI가 위험도를 분석하고 더 안전한 표현을 제안해드립니다.</div>
   </div>
+
+  <div class="maps-box">
+    <div class="maps-title">📋 MAPS 브리핑 질문 — 상황 후 자기 성찰</div>
+    <div class="maps-q">이 경험을 한 단어로 표현한다면 무엇인가요?</div>
+    <div class="maps-q">이 환자의 행동이 악화되는 것을 막기 위해 다르게 할 수 있었던 점이 있나요?</div>
+    <div class="maps-q">이 경험에서 새로 얻은 지식이 어떻게 도움이 될까요?</div>
+    <div class="maps-q">언어적 / 비언어적 의사소통 중 무엇이 더 효과적이었나요?</div>
+  </div>
+
   <textarea id="coach-input" rows="3" placeholder='예) "조용히 하세요, 다른 환자들 방해됩니다."'></textarea>
   <div class="clearfix">
     <button class="submit-btn" id="coach-btn" onclick="runCoach()">AI 분석 →</button>
@@ -187,6 +161,18 @@
     <div class="stat-card"><div class="stat-num" id="s-correct">0</div><div class="stat-label">정답</div></div>
     <div class="stat-card"><div class="stat-num" id="s-pct">0%</div><div class="stat-label">정확도</div></div>
   </div>
+
+  <div class="card risk-guide">
+    <div class="label">폭력 위험요인 안내</div>
+    <div style="font-size:12px;color:#888;margin-bottom:8px">KOPS·MAPS 기반 — 아래 요인이 있는 환자는 사전 모니터링 필요</div>
+    <div class="risk-item"><div class="risk-dot-sm" style="background:#E24B4A"></div>뇌경색·섬망·치매 등 기질성 정신장애</div>
+    <div class="risk-item"><div class="risk-dot-sm" style="background:#E24B4A"></div>알코올·약물 사용 (외출 후 음주 복귀 포함)</div>
+    <div class="risk-item"><div class="risk-dot-sm" style="background:#D85A30"></div>조현병·충동조절장애·인격장애</div>
+    <div class="risk-item"><div class="risk-dot-sm" style="background:#D85A30"></div>과거 폭력 행동 이력</div>
+    <div class="risk-item"><div class="risk-dot-sm" style="background:#F0A500"></div>반복적 불만 표현·공격적 언행</div>
+    <div class="risk-item"><div class="risk-dot-sm" style="background:#F0A500"></div>다인실 장기 입원 (생활환경 갈등 가능)</div>
+  </div>
+
   <div class="card">
     <div class="label">학습 현황</div>
     <div id="stats-msg" style="font-size:13px;color:#888;line-height:1.6">아직 시뮬레이션을 진행하지 않았습니다.</div>
@@ -196,62 +182,95 @@
 <script>
 const SCENARIOS = [
   {
-    risk: { color:'#F0A500', label:'🟡 긴장 증가' },
-    context: '환자가 검사 지연으로 화를 내며 큰 소리로 항의하고 있습니다.',
-    speech: '"검사가 언제 되는 건지 아무도 얘기 안 해주네요! 여기가 병원이에요, 뭐예요?"',
+    risk: { color:'#F0A500', label:'🟡 긴장 증가', factor:'위험요인: 다인실 장기입원 · 생활환경 갈등' },
+    context: '6인실 내과 병동. 옆 침상 환자가 새벽 2시에도 TV를 크게 틀어놓고 있습니다. 수면 장애가 있는 환자 A가 간호사에게 "저 사람 때문에 못 자겠어요, 당장 어떻게 해요!"라며 항의하고 있습니다.',
+    speech: '"리모컨을 제멋대로 쓰고 TV 소리는 왜 저렇게 크게 틀어요! 내가 먼저 쓰고 있었잖아요!"',
     choices: [
-      { text: 'A. "조용히 해주세요. 다른 분들도 계세요."', type:'wrong' },
-      { text: 'B. "많이 답답하셨죠. 검사 현황 바로 확인해드리겠습니다."', type:'correct' },
-      { text: 'C. 일단 자리를 피해 다음에 다시 이야기한다.', type:'neutral' },
+      { text: 'A. "두 분 다 조용히 하세요. 여기 병원이에요."', type:'wrong' },
+      { text: 'B. 환자 A에게 "많이 불편하셨겠어요. 잠깐 밖에서 이야기 나눠봐요."라며 자리를 분리한다.', type:'correct' },
+      { text: 'C. "제가 TV 소리 줄여달라고 말씀드릴게요."라고만 하고 넘어간다.', type:'neutral' },
     ],
     feedbacks: [
-      { title:'❌ 갈등 심화 우려', text:'환자 감정을 억압하는 표현으로 상황이 급격히 악화될 수 있습니다.', cls:'bad' },
-      { title:'✓ 최선의 대응', text:'공감 표현으로 감정을 수용한 후 구체적 행동을 약속했습니다.', cls:'good' },
-      { title:'△ 상황 회피', text:'즉각 대응하지 않으면 환자의 불안이 더 커질 수 있습니다.', cls:'neutral' },
+      { title:'❌ 양쪽 동시 제지 — 갈등 심화', text:'두 환자를 동시에 제지하면 양쪽 모두 무시당한다고 느껴 감정이 더 격해질 수 있습니다. 병실 내 폭력의 전조 신호를 놓칠 위험도 있습니다.', cls:'bad',
+        protocol:'💡 KOPS 권고: 반복적 불만 표현은 폭력 전조 신호로 인식하고 즉시 중재해야 합니다.' },
+      { title:'✓ 분리 + 공감 — 최선의 대응', text:'항의하는 환자를 먼저 별도 공간으로 분리해 감정을 충분히 들어주는 것이 핵심입니다. 두 환자가 같은 공간에 있으면 갈등이 신체적 폭력으로 확대될 수 있습니다.', cls:'good',
+        protocol:'💡 TV 리모컨 사례(2020): 사소한 생활 갈등이 폭행치사로 이어진 실제 사례. 초기 분리 중재가 핵심입니다.' },
+      { title:'△ 임시방편 — 근본 해결 안 됨', text:'소리만 줄이는 것은 표면적 해결입니다. 두 환자 간 감정 갈등은 남아 있어 밤새 재발할 수 있으며, 필요 시 병실 이동을 검토해야 합니다.', cls:'neutral',
+        protocol:'' },
     ]
   },
   {
-    risk: { color:'#D85A30', label:'🟠 공격 위험' },
-    context: '야간 근무 중 섬망이 의심되는 고령 환자가 침대에서 내려오려 합니다.',
-    speech: '"나 집에 가야 돼! 왜 나를 묶어놔! 이거 놔!"',
+    risk: { color:'#D85A30', label:'🟠 공격 위험', factor:'위험요인: 알코올·약물 — 외출 후 음주 복귀' },
+    context: '저녁 8시, 신부전증으로 입원 중인 환자가 외출 후 음주 상태로 복귀했습니다. 같은 병실 환자와 말다툼이 시작되었고 목소리가 점점 커지고 있습니다. 5분 전 짧은 몸싸움이 한 번 있었고 간호사가 말려 상황은 일단 정리됐습니다.',
+    speech: '"저 사람이 먼저 건드렸잖아요! 왜 나한테만 뭐라고 해요!"',
     choices: [
-      { text: 'A. "환자분, 지금 병원이에요! 위험하니 누워 계세요!"', type:'wrong' },
-      { text: 'B. 강제로 눕히고 억제대를 즉시 적용한다.', type:'wrong' },
-      { text: 'C. 낮은 목소리로 "여기 계세요, 제가 옆에 있을게요." 반복', type:'correct' },
+      { text: 'A. "일단 진정하세요."라고 말하고 다른 업무를 보러 간다.', type:'wrong' },
+      { text: 'B. 두 환자를 즉시 분리하고, 음주 환자를 별도 공간으로 이동 후 담당의·보호자에게 보고하며 병실 이동을 준비한다.', type:'correct' },
+      { text: 'C. 음주 환자에게 "오늘은 그냥 주무세요."라고 달래고 상황을 지켜본다.', type:'neutral' },
     ],
     feedbacks: [
-      { title:'❌ 지시형 언어 위험', text:'섬망 환자에게 명령형 지시는 공포와 공격성을 높입니다.', cls:'bad' },
-      { title:'❌ 즉각 억제 주의', text:'최후 수단으로만 활용하고 반드시 의사 처방이 필요합니다.', cls:'bad' },
-      { title:'✓ 섬망 환자 최적 대응', text:'안정적 목소리와 반복 안심 표현이 핵심입니다.', cls:'good' },
+      { title:'❌ 1차 폭행 후 방치 — 가장 위험', text:'1차 폭행이 발생했다는 것은 갈등이 이미 신체적 수준으로 확대된 것입니다. 자리를 피하면 2차 폭행이 발생할 수 있고 병원의 보호 의무 위반으로 법적 책임이 생깁니다.', cls:'bad',
+        protocol:'⚠️ 실제 판례: 1차 폭행 후 분리 조치를 하지 않아 피해 환자가 사망한 사례에서 법원은 병원 책임을 인정했습니다. (MedicalTimes)' },
+      { title:'✓ 즉각 분리 + 보고 — 표준 프로토콜', text:'1차 폭행 발생 후에는 반드시 두 환자를 즉시 분리하고 담당의 보고 → 보호자 연락 → 병실 이동 순으로 조치해야 합니다. 알코올 상태는 판단력을 저하시켜 추가 폭력 위험이 매우 높습니다.', cls:'good',
+        protocol:'💡 KOPS 권고: 외출·외박 후 복귀 환자의 음주·흥분 상태 확인, 갈등 가능성 사전 파악이 필요합니다.' },
+      { title:'❌ 달래기만으론 부족', text:'음주 상태 환자는 이성적 판단이 어렵습니다. 설득이 통하지 않을 수 있고 30분~1시간 후 재발 위험이 있습니다. 반드시 물리적 분리와 보고가 필요합니다.', cls:'bad',
+        protocol:'' },
     ]
   },
   {
-    risk: { color:'#E24B4A', label:'🔴 폭력 가능성 높음' },
-    context: '보호자가 수술 결과에 불만을 표하며 스테이션으로 다가오고 있습니다.',
-    speech: '"당신들 때문에 우리 가족이 이렇게 된 거잖아요! 책임져요!"',
+    risk: { color:'#E24B4A', label:'🔴 폭력 가능성 높음', factor:'위험요인: 섬망 · 기질성 정신장애' },
+    context: '야간 근무 중 복부수술 후 2일차 75세 남성 환자가 섬망 증상을 보이며 침대에서 내려오려 하고 있습니다. "집에 가야 한다"고 소리치며 옆 침상 환자를 밀치려 하고 있습니다.',
+    speech: '"나 집에 가야 돼! 이거 놔! 저 사람이 내 자리 뺏었잖아!"',
     choices: [
-      { text: 'A. 직접 보호자를 붙잡으며 진정시킨다.', type:'wrong' },
-      { text: 'B. "얼마나 힘드실지 압니다. 잠깐 앉아서 이야기 나눠봐요." + 동료 신호', type:'correct' },
-      { text: 'C. 즉시 자리를 피하고 보안팀에 연락한다.', type:'neutral' },
+      { text: 'A. 큰 소리로 "환자분! 여기 병원이에요! 위험해요! 누워 계세요!"라고 제지한다.', type:'wrong' },
+      { text: 'B. 조명을 밝히고, 낮고 차분한 목소리로 "여기 있어요, 제가 옆에 있을게요."를 반복하며 동료를 즉시 호출한다.', type:'correct' },
+      { text: 'C. 즉시 억제대를 적용해 침대에 고정한다.', type:'wrong' },
     ],
     feedbacks: [
-      { title:'❌ 신체 접촉 금지', text:'이 단계 신체 접촉은 폭행으로 이어질 수 있습니다.', cls:'bad' },
-      { title:'✓ 표준 대응 프로토콜', text:'공감 표현과 거리 유지, 동료 지원 요청의 정석 대응입니다.', cls:'good' },
-      { title:'△ 상황에 따라 적절', text:'직접적 위협이 임박했다면 즉시 대피가 맞습니다.', cls:'neutral' },
+      { title:'❌ 고성·명령 — 섬망 환자에게 역효과', text:'섬망 환자에게 큰 소리와 명령형 언어는 공포심을 자극해 공격성을 급격히 높입니다. 언어적·신체적 의사소통을 구분하는 것이 핵심입니다(MAPS 원칙).', cls:'bad',
+        protocol:'💡 MAPS: 언어적 의사소통과 비언어적 의사소통을 구분하고, 몸짓·목소리 톤이 더 중요합니다.' },
+      { title:'✓ 섬망 표준 대응 프로토콜', text:'조명을 밝혀 현실 지남력을 높이고, 낮고 안정적인 목소리로 반복 안심시키는 것이 핵심입니다. 혼자 대응하지 말고 동료를 즉시 호출해 2인 대응 체계를 갖춰야 합니다.', cls:'good',
+        protocol:'💡 KOPS 권고: 폭력 전조 상황에서 "2인 1조 시스템"을 활용하고, 기질성 정신장애 의심 시 즉시 협진 의뢰가 필요합니다.' },
+      { title:'❌ 즉각 억제대 — 최후 수단', text:'억제대는 반드시 의사 처방이 있어야 하며 최후 수단으로만 사용해야 합니다. 무단 적용 시 환자 손상 및 법적·윤리적 문제가 발생할 수 있습니다.', cls:'bad',
+        protocol:'⚠️ 타과적 문제(뇌경색·간질·감염 등)가 있는지 감별 후 즉시 협진 의뢰해야 합니다.' },
     ]
   }
 ];
 
 const CASES = [
-  { tag:'tag-delirium', tagText:'섬망 환자', title:'야간 섬망 환자 침대 이탈 사건',
-    summary:'75세 남성, 복부수술 후 2일차. 야간에 갑자기 집에 가야 한다며 이탈 시도.',
-    steps:['원인: 수술 후 통증, 수면 교란, 낯선 환경으로 인한 급성 섬망','잘못된 대응: 소리 지르며 억제 → 공격성 증가','올바른 대응: 조명 밝히기, 낮은 목소리로 안심, 가족 연락, 의사 보고'] },
-  { tag:'tag-verbal', tagText:'환자 폭언', title:'처치 지연 항의 중 폭언 상황',
-    summary:'응급 처치 대기 중 환자가 지속적으로 모욕적 언어 사용.',
-    steps:['원인: 극심한 통증과 불안으로 인한 통제력 상실','잘못된 대응: 맞대응 또는 무시 → 상황 격화','올바른 대응: "화나신 거 이해해요. 통증부터 해결해드릴게요." 감정 우선 공감'] },
-  { tag:'tag-guardian', tagText:'보호자 분쟁', title:'수술 결과 불만 보호자 폭력 직전 상황',
-    summary:'수술 후 합병증 발생. 보호자가 의료진 과실 주장하며 물리적 위협.',
-    steps:['원인: 정보 부족과 슬픔이 분노로 전환','잘못된 대응: 즉각 변명 또는 자리 회피 → 불신 심화','올바른 대응: 안전한 공간 안내, 경청, 담당의 연결, 보안팀 대기'] },
+  {
+    tag:'tag-alcohol', tagText:'알코올·외출 복귀',
+    title:'입원 환자 음주 후 폭행 → 피해 환자 사망',
+    summary:'신부전증 입원 환자가 외출 후 음주 상태로 복귀, 같은 병실 환자를 폭행. 간호사가 1차 폭행을 저지했지만 30분 후 2차 폭행 발생. 피해 환자 경질막밑출혈로 사망.',
+    cause:'원인: 음주로 인한 판단력 저하 + 1차 폭행 후 분리 조치 미흡',
+    steps:[
+      { type:'bad', text:'잘못된 대응: 1차 폭행 제지 후 두 환자를 같은 병실에 그대로 둠 → 2차 폭행 발생' },
+      { type:'good', text:'올바른 대응: 1차 폭행 즉시 → 두 환자 물리적 분리 → 담당의 보고 → 보호자 연락 → 병실 이동 → 필요 시 보안팀·경찰 요청' },
+    ],
+    ref:'출처: MedicalTimes, 입원 환자 폭행부터 사망까지 "병원 책임 있다"'
+  },
+  {
+    tag:'tag-roommate', tagText:'다인실 생활 갈등',
+    title:'TV 리모컨 갈등 → 폭행치사',
+    summary:'같은 병실 60대 환자가 TV 리모컨 사용 문제로 다른 환자를 폭행. 피해자는 급성 출혈로 사망. 가해자 폭행치사 혐의 징역 3년 선고.',
+    cause:'원인: 다인실 공동생활 스트레스 + 질병·통증으로 인한 감정 조절 어려움',
+    steps:[
+      { type:'bad', text:'잘못된 대응: 사소한 생활 갈등 신호를 무시하고 초기 중재 없이 방치' },
+      { type:'good', text:'올바른 대응: 반복적 불만 표현 → 폭력 전조 신호로 인식 → 두 환자 분리 면담 → 병실 이동 검토 → 담당의 보고' },
+    ],
+    ref:'출처: 연합뉴스, TV 리모컨이 뭐라고…같은 병실 환자 폭행치사 60대 징역 3년 (2020)'
+  },
+  {
+    tag:'tag-assault', tagText:'섬망·기질성 장애',
+    title:'섬망 환자 야간 이탈 시도 → 주변 환자 위협',
+    summary:'수술 후 2일차 고령 환자의 급성 섬망 발생. 야간에 "집에 가야 한다"며 침대 이탈 시도, 옆 환자를 밀치며 병실 내 위험 상황 발생.',
+    cause:'원인: 수술 후 통증·수면 교란·낯선 환경으로 인한 급성 섬망 (기질성 정신장애)',
+    steps:[
+      { type:'bad', text:'잘못된 대응: 큰 소리·명령으로 제지 → 공격성 증가 / 즉각 억제대 적용 → 의사 처방 없이 불가' },
+      { type:'good', text:'올바른 대응: 조명 밝히기 → 낮은 목소리 반복 안심 → 동료 즉시 호출(2인 대응) → 담당의 보고 → 협진 의뢰(기질성 문제 감별) → 가족 연락' },
+    ],
+    ref:'출처: KOPS 폭력 예방 전략 점검표 / Violent Patients, National Library of Medicine (2025)'
+  },
 ];
 
 let cur = 0, answered = false, stats = { total:0, correct:0 };
@@ -272,6 +291,7 @@ function renderSim() {
   document.getElementById('risk-dot').style.background = s.risk.color;
   document.getElementById('risk-label').textContent = s.risk.label;
   document.getElementById('risk-label').style.color = s.risk.color;
+  document.getElementById('risk-factor').textContent = s.risk.factor;
 
   const body = document.getElementById('sim-body');
   body.innerHTML = `
@@ -290,11 +310,14 @@ function pick(idx) {
   const s = SCENARIOS[cur];
   document.querySelectorAll('.choice').forEach((b,i) => b.classList.add(s.choices[i].type));
   const fb = s.feedbacks[idx];
-  document.getElementById('feedback-area').innerHTML =
-    `<div class="feedback ${fb.cls}"><div class="feedback-title">${fb.title}</div>${fb.text}</div>`;
+  document.getElementById('feedback-area').innerHTML = `
+    <div class="feedback ${fb.cls}">
+      <div class="feedback-title">${fb.title}</div>
+      ${fb.text}
+      ${fb.protocol ? `<div class="protocol-box">${fb.protocol}</div>` : ''}
+    </div>`;
   stats.total++;
   if (s.choices[idx].type === 'correct') stats.correct++;
-
   const isLast = cur >= SCENARIOS.length - 1;
   document.getElementById('next-area').innerHTML =
     `<button class="next-btn" onclick="${isLast ? 'resetSim()' : 'nextSim()'}">${isLast ? '처음으로 돌아가기 ↺' : '다음 시나리오 →'}</button>`;
@@ -307,16 +330,22 @@ function renderCases() {
   const el = document.getElementById('cases-body');
   if (el.innerHTML) return;
   CASES.forEach((c,i) => {
+    const stepsHtml = c.steps.map(s =>
+      `<div class="step-row">
+        <div class="step-num ${s.type === 'bad' ? 'step-bad' : 'step-good'}">${s.type === 'bad' ? '✗' : '✓'}</div>
+        <div style="font-size:13px;line-height:1.5">${s.text}</div>
+      </div>`
+    ).join('');
     el.innerHTML += `
       <div class="card">
         <span class="case-tag ${c.tag}">${c.tagText}</span>
-        <div style="font-size:14px;font-weight:600;margin-bottom:6px">${c.title}</div>
-        <div style="font-size:13px;color:#666;line-height:1.5">${c.summary}</div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:4px">${c.title}</div>
+        <div style="font-size:13px;color:#666;line-height:1.5;margin-bottom:4px">${c.summary}</div>
+        <div style="font-size:12px;color:#D85A30;margin-bottom:2px">${c.cause}</div>
         <button class="expand-btn" id="exp-btn-${i}" onclick="toggleCase(${i})">자세히 보기 ↓</button>
         <div id="case-${i}" style="display:none">
-          <div class="case-steps">
-            ${c.steps.map((s,j) => `<div class="step-row"><div class="step-num">${j+1}</div><div style="font-size:13px;line-height:1.5">${s}</div></div>`).join('')}
-          </div>
+          <div class="case-steps">${stepsHtml}</div>
+          <div class="ref-box">${c.ref}</div>
         </div>
       </div>`;
   });
@@ -336,8 +365,8 @@ function renderStats() {
   const pct = stats.total ? Math.round(stats.correct/stats.total*100) : 0;
   document.getElementById('s-pct').textContent = pct + '%';
   const msg = stats.total === 0 ? '아직 시뮬레이션을 진행하지 않았습니다.'
-    : pct >= 80 ? `정확도 ${pct}% — 훌륭합니다! 실전 대응 능력이 높습니다.`
-    : pct >= 50 ? `정확도 ${pct}% — 양호합니다. 사례 학습으로 더 향상시켜 보세요.`
+    : pct >= 80 ? `정확도 ${pct}% — 훌륭합니다! 실전 병동 대응 능력이 높습니다.`
+    : pct >= 50 ? `정확도 ${pct}% — 양호합니다. 사례 탭으로 복습해보세요.`
     : `정확도 ${pct}% — 사례 탭을 먼저 학습한 후 다시 시도해보세요.`;
   document.getElementById('stats-msg').textContent = msg;
 }
@@ -348,14 +377,13 @@ async function runCoach() {
   const btn = document.getElementById('coach-btn');
   btn.disabled = true; btn.textContent = '분석 중...';
   document.getElementById('coach-result').innerHTML = '<div class="loading">AI가 분석하고 있습니다...</div>';
-
   try {
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        system: `당신은 병동 폭력 예방 전문 간호 교육 AI입니다. 반드시 JSON만 출력:
-{"risk_level":"낮음|보통|높음","risk_reason":"위험한 이유 1문장","better":"개선된 표현","better_reason":"왜 더 나은지 1-2문장","tip":"실전 팁 1문장"}`,
+        system: `당신은 병동 폭력 예방 전문 간호 교육 AI입니다. MAPS 프로그램과 KOPS 가이드라인 기반으로 분석하세요. 반드시 JSON만 출력하세요:
+{"risk_level":"낮음|보통|높음","risk_reason":"위험한 이유 1문장","better":"개선된 표현","better_reason":"왜 더 나은지 1-2문장","tip":"MAPS·KOPS 기반 실전 팁 1문장"}`,
         message: `간호사 표현: "${input}"`
       })
     });
@@ -365,7 +393,7 @@ async function runCoach() {
     const riskColor = p.risk_level==='높음'?'#4A1B0C':p.risk_level==='보통'?'#412402':'#085041';
     document.getElementById('coach-result').innerHTML = `
       <div class="ai-result">
-        <div class="ai-result-header">AI 분석 결과</div>
+        <div class="ai-result-header">AI 분석 결과 (MAPS·KOPS 기반)</div>
         <div class="ai-result-body">
           <div class="risk-badge" style="background:${riskBg};color:${riskColor}">위험도: ${p.risk_level}</div>
           <p style="font-size:13px;color:#888;margin-bottom:12px">${p.risk_reason}</p>
